@@ -3,681 +3,942 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SST Market · Em breve</title>
+<title>Pesquisa SST Marketplace</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#060d08;
-  --surface:#0d1a10;
-  --surface2:#142018;
-  --border:rgba(255,255,255,.07);
-  --teal:#00c97a;
-  --teal2:#00a362;
-  --teal-dim:rgba(0,201,122,.1);
-  --teal-glow:rgba(0,201,122,.2);
-  --amber:#f5a623;
-  --text:#e8f2ec;
-  --text2:#7da889;
-  --text3:#3d5c45;
-  --display:'Fraunces',serif;
-  --body:'DM Sans',sans-serif;
-  --mono:'DM Mono',monospace;
-}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0d1a14;--ink2:#2d4038;--muted:#7a9085;--muted2:#b8cdc5;
+  --bg:#f0f5f2;--surface:#ffffff;--surface2:#f7faf8;--border:#d6e5dc;
+  --teal:#0e8c5f;--teal-mid:#1aad76;--teal-soft:#e4f5ed;--teal-glow:rgba(14,140,95,.15);
+  --radius:14px;--font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;
+}
 html{scroll-behavior:smooth}
-body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.7}
-
-/* ── GRAIN OVERLAY ── */
-body::before{
-  content:'';position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:100;
-}
-
-/* ── RADIAL LIGHT ── */
-.radial{
-  position:fixed;top:-200px;left:50%;transform:translateX(-50%);
-  width:900px;height:600px;
-  background:radial-gradient(ellipse at center,rgba(0,201,122,.15) 0%,transparent 65%);
-  pointer-events:none;
-}
-
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:50;
-  padding:18px 40px;
-  display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid transparent;
-  transition:border-color .3s,background .3s;
-}
-nav.scrolled{background:rgba(6,13,8,.9);backdrop-filter:blur(12px);border-color:var(--border)}
-.nav-logo{display:flex;align-items:center;gap:10px}
-.nav-logo-mark{
-  width:32px;height:32px;background:var(--teal);border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 20px var(--teal-glow);
-}
-.nav-logo-mark svg{width:16px;height:16px;fill:#fff}
-.nav-brand{font-family:var(--display);font-size:18px;font-weight:700;color:var(--text);letter-spacing:-.5px}
-.nav-brand span{color:var(--teal)}
-.nav-cta{
-  font-size:12px;font-weight:500;
-  padding:8px 18px;border-radius:8px;
-  background:var(--teal);color:#000;
-  border:none;cursor:pointer;font-family:var(--body);
-  transition:all .2s;
-}
-.nav-cta:hover{background:#00e88a;transform:translateY(-1px)}
-
-/* ── HERO ── */
-.hero{
-  min-height:100vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:120px 24px 80px;
-  position:relative;
-}
-
-.badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--teal-dim);border:1px solid rgba(0,201,122,.25);
-  border-radius:30px;padding:6px 16px;
-  font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;
-  color:var(--teal);margin-bottom:32px;
-  animation:fadeDown .6s ease both;
-}
-.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 var(--teal-glow)}50%{opacity:.7;box-shadow:0 0 0 6px transparent}}
-
-.hero h1{
-  font-family:var(--display);
-  font-size:clamp(40px,7vw,84px);
-  font-weight:900;line-height:1.0;
-  letter-spacing:-2px;
-  color:var(--text);
-  max-width:820px;
-  margin-bottom:8px;
-  animation:fadeDown .6s .1s ease both;
-}
-.hero h1 em{font-style:italic;color:var(--teal)}
-.hero h1 .line2{display:block;font-weight:300}
-
-.hero-sub{
-  font-size:clamp(15px,2vw,18px);
-  color:var(--text2);max-width:520px;
-  line-height:1.75;margin-bottom:48px;
-  animation:fadeDown .6s .2s ease both;
-}
-
-/* ── WAITLIST FORM ── */
-.form-wrap{
-  width:100%;max-width:480px;
-  animation:fadeDown .6s .3s ease both;
-}
-.form-row{display:flex;gap:10px;margin-bottom:12px}
-.form-input{
-  flex:1;padding:14px 18px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:10px;
-  color:var(--text);font-size:14px;font-family:var(--body);
-  transition:border-color .2s;
-  outline:none;
-}
-.form-input:focus{border-color:var(--teal)}
-.form-input::placeholder{color:var(--text3)}
-.form-select{
-  padding:14px 18px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:10px;
-  color:var(--text2);font-size:14px;font-family:var(--body);
-  outline:none;cursor:pointer;
-  transition:border-color .2s;
-  appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237da889' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 14px center;
-  padding-right:36px;
-}
-.form-select:focus{border-color:var(--teal)}
-.form-select option{background:var(--surface);color:var(--text)}
-.btn-submit{
-  width:100%;padding:15px;
-  background:var(--teal);color:#000;
-  border:none;border-radius:10px;
-  font-size:14px;font-weight:600;font-family:var(--body);
-  cursor:pointer;transition:all .2s;
-  box-shadow:0 4px 32px var(--teal-glow);
-}
-.btn-submit:hover{background:#00e88a;transform:translateY(-2px);box-shadow:0 8px 40px rgba(0,201,122,.35)}
-.btn-submit:disabled{opacity:.5;pointer-events:none;transform:none}
-.form-note{font-size:12px;color:var(--text3);text-align:center;margin-top:10px}
-
-.form-error{
-  display:none;font-size:12px;color:#f5623a;
-  margin-bottom:8px;padding:8px 12px;
-  background:rgba(245,98,58,.08);border-radius:7px;
-  border:1px solid rgba(245,98,58,.2);
-}
-.form-success{
-  display:none;text-align:center;padding:28px 0;
-}
-.success-icon{font-size:48px;margin-bottom:12px;display:block}
-.success-title{font-family:var(--display);font-size:24px;font-weight:700;color:var(--text);margin-bottom:8px}
-.success-sub{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:20px}
-.success-share{
-  background:var(--teal-dim);border:1px solid rgba(0,201,122,.2);
-  border-radius:10px;padding:14px 16px;text-align:left;
-}
-.success-share p{font-size:11px;font-family:var(--mono);letter-spacing:.8px;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
-.success-msg{font-size:12.5px;color:var(--text2);line-height:1.6;font-style:italic;margin-bottom:10px}
-.btn-copy2{
-  width:100%;padding:9px;background:var(--teal);color:#000;
-  border:none;border-radius:7px;font-size:12px;font-weight:600;
-  font-family:var(--body);cursor:pointer;transition:background .15s;
-}
-.btn-copy2:hover{background:#00e88a}
-
-/* ── COUNTER ── */
-.counter-row{
-  display:flex;align-items:center;gap:6px;
-  justify-content:center;margin-top:24px;
-  animation:fadeDown .6s .4s ease both;
-}
-.counter-avatars{display:flex}
-.avatar{
-  width:28px;height:28px;border-radius:50%;
-  border:2px solid var(--bg);
-  background:var(--surface2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:12px;margin-left:-8px;
-}
-.avatar:first-child{margin-left:0}
-.counter-text{font-size:13px;color:var(--text2)}
-.counter-text strong{color:var(--teal)}
-
-/* ── DIVIDER ── */
-.section{padding:80px 24px}
-.container{max-width:1060px;margin:0 auto}
-
-/* ── PROBLEMS ── */
-.problems-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
-.prob{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:16px;padding:28px 24px;
-  position:relative;overflow:hidden;
-  transition:border-color .25s,transform .25s;
-}
-.prob:hover{border-color:rgba(0,201,122,.2);transform:translateY(-3px)}
-.prob-stripe{position:absolute;top:0;left:0;right:0;height:2px}
-.stripe-teal{background:var(--teal)}
-.stripe-amber{background:var(--amber)}
-.stripe-blue{background:#4a9eff}
-.prob-who{
-  font-family:var(--mono);font-size:10px;letter-spacing:1px;
-  text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px;
-}
-.prob-who span{font-size:18px}
-.prob h3{font-family:var(--display);font-size:19px;font-weight:700;color:var(--text);margin-bottom:14px;line-height:1.3}
-.prob ul{list-style:none;display:flex;flex-direction:column;gap:8px}
-.prob ul li{font-size:13px;color:var(--text2);display:flex;gap:8px;line-height:1.5}
-.prob ul li::before{content:'→';flex-shrink:0;margin-top:1px}
-.prob-teal .prob-who{color:var(--teal)} .prob-teal ul li::before{color:var(--teal)}
-.prob-amber .prob-who{color:var(--amber)} .prob-amber ul li::before{color:var(--amber)}
-.prob-blue .prob-who{color:#4a9eff} .prob-blue ul li::before{color:#4a9eff}
-
-/* ── HOW IT WORKS ── */
-.how-label{
-  font-family:var(--mono);font-size:10px;letter-spacing:1.4px;
-  text-transform:uppercase;color:var(--text3);
-  display:flex;align-items:center;gap:8px;margin-bottom:12px;
-}
-.how-label::before{content:'';width:20px;height:1px;background:var(--text3)}
-.how-title{font-family:var(--display);font-size:clamp(28px,4vw,44px);font-weight:700;color:var(--text);margin-bottom:16px;line-height:1.2}
-.how-sub{font-size:15px;color:var(--text2);max-width:520px;line-height:1.8;margin-bottom:52px}
-
-.how-tabs{display:flex;gap:4px;margin-bottom:32px;border-bottom:1px solid var(--border);padding-bottom:0}
-.how-tab{
-  font-family:var(--mono);font-size:11px;letter-spacing:.6px;text-transform:uppercase;
-  padding:10px 18px;border:none;background:none;color:var(--text3);
-  cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;
-  transition:color .2s,border-color .2s;
-}
-.how-tab:hover{color:var(--text2)}
-.how-tab.active{color:var(--teal);border-color:var(--teal)}
-
-.how-pane{display:none}
-.how-pane.active{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
-.how-step{
-  padding:20px 16px;text-align:center;position:relative;
-}
-.how-step:not(:last-child)::after{
-  content:'→';position:absolute;right:-8px;top:28px;
-  color:var(--text3);font-size:16px;z-index:2;
-}
-.how-num{
-  font-family:var(--mono);font-size:10px;letter-spacing:.8px;
-  color:var(--text3);margin-bottom:10px;
-}
-.how-icon{
-  width:44px;height:44px;border-radius:12px;
-  background:var(--surface2);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;margin:0 auto 12px;
-}
-.how-label2{font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px}
-.how-note{font-size:11px;color:var(--text3);line-height:1.5}
-
-/* ── FEATURES ── */
-.features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px}
-.feat{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:14px;padding:24px;
-  display:flex;gap:16px;align-items:flex-start;
-  transition:border-color .2s;
-}
-.feat:hover{border-color:rgba(0,201,122,.15)}
-.feat-icon{
-  width:40px;height:40px;border-radius:10px;
-  background:var(--teal-dim);border:1px solid rgba(0,201,122,.2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:18px;flex-shrink:0;
-}
-.feat h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
-.feat p{font-size:12.5px;color:var(--text2);line-height:1.6}
-.feat-badge{
-  display:inline-block;font-family:var(--mono);font-size:9px;
-  padding:2px 7px;border-radius:4px;margin-top:6px;font-weight:500;
-}
-.fb-mvp{background:var(--teal-dim);color:var(--teal)}
-.fb-v1{background:rgba(245,166,35,.1);color:var(--amber)}
-
-/* ── CTA FINAL ── */
-.cta-final{
-  text-align:center;padding:80px 24px 100px;
-  position:relative;
-}
-.cta-glow{
-  position:absolute;bottom:-100px;left:50%;transform:translateX(-50%);
-  width:600px;height:400px;
-  background:radial-gradient(ellipse,rgba(0,201,122,.12) 0%,transparent 65%);
-  pointer-events:none;
-}
-.cta-final h2{font-family:var(--display);font-size:clamp(28px,5vw,52px);font-weight:900;color:var(--text);margin-bottom:12px;line-height:1.1;letter-spacing:-1px}
-.cta-final h2 em{font-style:italic;color:var(--teal)}
-.cta-final p{font-size:15px;color:var(--text2);margin-bottom:36px;max-width:420px;margin-left:auto;margin-right:auto}
-
-/* ── FOOTER ── */
-footer{
-  border-top:1px solid var(--border);
-  padding:28px 40px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.footer-brand{font-family:var(--display);font-size:16px;font-weight:700;color:var(--text2)}
-.footer-brand span{color:var(--teal)}
-.footer-copy{font-size:12px;color:var(--text3);font-family:var(--mono)}
-
-/* ── SEC HEADER ── */
-.sec-head{margin-bottom:0}
-.sec-label-line{
-  font-family:var(--mono);font-size:10px;letter-spacing:1.4px;
-  text-transform:uppercase;color:var(--text3);
-  display:flex;align-items:center;gap:8px;margin-bottom:12px;
-}
-.sec-label-line::before{content:'';width:20px;height:1px;background:var(--text3)}
-.sec-h{font-family:var(--display);font-size:clamp(26px,4vw,42px);font-weight:700;color:var(--text);line-height:1.2;margin-bottom:12px}
-.sec-p{font-size:15px;color:var(--text2);max-width:500px;line-height:1.8}
-
-/* ── ANIMATIONS ── */
-@keyframes fadeDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
-
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-/* ── RESPONSIVE ── */
-@media(max-width:768px){
-  .problems-grid{grid-template-columns:1fr}
-  .how-pane.active{grid-template-columns:1fr}
-  .how-step:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-14px;transform:translateX(50%)}
-  .features-grid{grid-template-columns:1fr}
-  footer{flex-direction:column;gap:10px;text-align:center}
-  nav{padding:16px 20px}
-  .form-row{flex-direction:column}
-}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px;line-height:1.65}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(26,173,118,.07) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 80% 80%,rgba(14,140,95,.05) 0%,transparent 55%);pointer-events:none;z-index:0}
+.page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 16px 80px}
+header{width:100%;max-width:620px;text-align:center;margin-bottom:36px}
+.logo-mark{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;background:var(--teal);border-radius:14px;margin-bottom:14px;box-shadow:0 4px 24px var(--teal-glow)}
+.logo-mark svg{width:26px;height:26px;fill:#fff}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+header h1{font-size:clamp(22px,4vw,30px);font-weight:700;color:var(--ink);line-height:1.25;margin-bottom:12px}
+header p{font-size:14px;color:var(--muted);max-width:480px;margin:0 auto 18px}
+.time-badge{display:inline-flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border);border-radius:30px;padding:6px 14px;font-size:12px;color:var(--muted)}
+.time-badge::before{content:'⏱';font-size:13px}
+.progress-wrap{width:100%;max-width:620px;margin-bottom:22px}
+.progress-top{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px}
+.progress-track{height:4px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:var(--teal);border-radius:4px;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%}
+.card{width:100%;max-width:620px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 2px 20px rgba(14,60,35,.08);overflow:hidden}
+.card-tag{padding:12px 28px;background:var(--teal-soft);border-bottom:1px solid var(--border);font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:7px}
+.card-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0}
+.card-body{padding:28px}
+.screen{display:none}
+.screen.active{display:block}
+.screen-title{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:6px;line-height:1.3}
+.screen-sub{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.6}
+.profile-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.p-card{border:1.5px solid var(--border);border-radius:12px;padding:18px 12px 14px;cursor:pointer;text-align:center;transition:border-color .2s,background .2s,transform .15s,box-shadow .2s;background:var(--surface2);user-select:none}
+.p-card:hover{border-color:var(--teal-mid);background:var(--teal-soft);transform:translateY(-2px);box-shadow:0 4px 16px var(--teal-glow)}
+.p-card.sel{border-color:var(--teal);background:var(--teal-soft);box-shadow:0 0 0 3px var(--teal-glow),0 4px 16px var(--teal-glow)}
+.p-icon{font-size:30px;margin-bottom:10px;display:block;pointer-events:none}
+.p-label{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px;pointer-events:none}
+.p-desc{font-size:10.5px;color:var(--muted);line-height:1.4;pointer-events:none}
+.q-block{margin-bottom:20px}
+.q-label{display:block;font-size:13.5px;font-weight:600;color:var(--ink2);margin-bottom:10px;line-height:1.4}
+.q-hint{font-weight:400;font-size:11.5px;color:var(--muted);margin-left:4px}
+.opt-list{display:flex;flex-direction:column;gap:7px}
+.opt{display:flex;align-items:center;gap:10px;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:border-color .15s,background .15s;background:var(--surface2)}
+.opt:hover{border-color:var(--teal-mid);background:var(--teal-soft)}
+.opt.sel{border-color:var(--teal);background:var(--teal-soft)}
+.opt input{width:17px;height:17px;flex-shrink:0;accent-color:var(--teal);cursor:pointer}
+.opt-text{font-size:13px;color:var(--ink);line-height:1.4;pointer-events:none}
+.chip-grid{display:flex;flex-wrap:wrap;gap:7px}
+.chip{padding:7px 13px;border:1.5px solid var(--border);border-radius:30px;font-size:12px;font-weight:500;cursor:pointer;color:var(--ink2);background:var(--surface2);transition:all .15s;user-select:none}
+.chip:hover{border-color:var(--teal-mid);color:var(--teal);background:var(--teal-soft)}
+.chip.sel{background:var(--teal);color:#fff;border-color:var(--teal)}
+.q-textarea{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-size:13px;font-family:var(--font);color:var(--ink);background:var(--surface2);resize:vertical;min-height:90px;line-height:1.6;transition:border-color .2s}
+.q-textarea:focus{outline:none;border-color:var(--teal);background:#fff}
+.card-nav{display:flex;justify-content:space-between;align-items:center;padding:18px 28px;border-top:1px solid var(--border);background:var(--surface2)}
+.step-counter{font-size:11.5px;color:var(--muted);font-family:var(--mono)}
+.btn{padding:10px 22px;border-radius:10px;font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--ink2);transition:all .15s}
+.btn:hover{background:var(--bg);border-color:var(--ink2)}
+.btn-primary{background:var(--teal);color:#fff;border-color:var(--teal);box-shadow:0 2px 12px var(--teal-glow)}
+.btn-primary:hover{background:#0a7a52;border-color:#0a7a52;transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.4;pointer-events:none;transform:none}
+.thanks{text-align:center;padding:40px 28px 32px}
+.check{width:64px;height:64px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 4px 24px var(--teal-glow)}
+.check svg{width:30px;height:30px;fill:#fff}
+.thanks h2{font-size:22px;font-weight:700;margin-bottom:8px}
+.thanks p{font-size:13.5px;color:var(--muted);max-width:380px;margin:0 auto 24px;line-height:1.7}
+.share-box{background:var(--teal-soft);border:1px solid rgba(14,140,95,.2);border-radius:12px;padding:16px 18px;text-align:left}
+.share-label{font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.share-text{font-size:12.5px;color:var(--ink2);line-height:1.7;background:var(--surface);border-radius:8px;padding:12px;border:1px solid var(--border);margin-bottom:12px;font-style:italic}
+.btn-copy{width:100%;padding:10px;background:var(--teal);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;transition:background .15s}
+.btn-copy:hover{background:#0a7a52}
+footer{margin-top:28px;text-align:center;font-size:12px;color:var(--muted2)}
+@media(max-width:520px){.profile-grid{grid-template-columns:1fr}.card-body{padding:20px}.card-nav{padding:14px 20px}}
 </style>
 </head>
 <body>
+<div class="page">
 
-<div class="radial"></div>
+<header>
+  <div class="logo-mark"><svg viewBox="0 0 24 24"><path d="M12 2C9.24 2 7 4.24 7 7v1H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2h-2V7c0-2.76-2.24-5-5-5zm0 2c1.65 0 3 1.35 3 3v1H9V7c0-1.65 1.35-3 3-3z"/></svg></div>
+  <div class="eyebrow">Pesquisa de Mercado · SST Marketplace</div>
+  <h1>Sua experiência vai moldar uma nova plataforma de SST</h1>
+  <p>Estamos desenvolvendo um marketplace de Saúde e Segurança do Trabalho. Sua opinião é fundamental para construirmos algo que realmente resolve os problemas da área.</p>
+  <span class="time-badge">5 a 8 minutos · anônimo · sem cadastro</span>
+</header>
 
-<!-- NAV -->
-<nav id="mainNav">
-  <div class="nav-logo">
-    <div class="nav-logo-mark">
-      <svg viewBox="0 0 24 24"><path d="M12 2C9.24 2 7 4.24 7 7v1H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2h-2V7c0-2.76-2.24-5-5-5zm0 2c1.65 0 3 1.35 3 3v1H9V7c0-1.65 1.35-3 3-3z"/></svg>
-    </div>
-    <div class="nav-brand">SST<span>Market</span></div>
+<div class="progress-wrap">
+  <div class="progress-top">
+    <span id="prog-label">Identificação do perfil</span>
+    <span id="prog-pct">0%</span>
   </div>
-  <button class="nav-cta" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">Entrar na lista →</button>
-</nav>
+  <div class="progress-track"><div class="progress-fill" id="progressBar"></div></div>
+</div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="badge"><div class="badge-dot"></div>Em construção · Seja o primeiro a saber</div>
-  <h1>O marketplace de<br><em>Saúde e Segurança</em><span class="line2">do Trabalho</span></h1>
-  <p class="hero-sub">Conectamos profissionais de SST a empresas que precisam de serviços — com orçamentos, prazos e avaliações em um só lugar.</p>
+<div class="card">
 
-  <!-- WAITLIST FORM -->
-  <div class="form-wrap" id="waitlist">
-    <div id="formBox">
-      <div id="formError" class="form-error">Preencha todos os campos corretamente.</div>
-      <div class="form-row">
-        <input type="text" id="wName" class="form-input" placeholder="Seu nome">
-      </div>
-      <div class="form-row">
-        <input type="email" id="wEmail" class="form-input" placeholder="Seu melhor e-mail">
-        <select id="wPerfil" class="form-select">
-          <option value="" disabled selected>Perfil</option>
-          <option value="Profissional SST">👷 Profissional</option>
-          <option value="Empresa / RH">🏭 Empresa</option>
-          <option value="Estudante / Recém-formado">🎓 Estudante</option>
-        </select>
-      </div>
-      <button class="btn-submit" onclick="entrarLista()">Quero entrar na lista de espera →</button>
-      <div class="form-note">Gratuito · Sem spam · Você será avisado no lançamento</div>
-    </div>
-    <div id="formSuccess" class="form-success">
-      <span class="success-icon">🎉</span>
-      <div class="success-title">Você está na lista!</div>
-      <div class="success-sub">Perfeito! Você será um dos primeiros a ter acesso à plataforma. Te avisaremos assim que o beta abrir.</div>
-      <div class="success-share">
-        <p>Compartilhe com colegas de SST</p>
-        <div class="success-msg" id="shareText2"></div>
-        <button class="btn-copy2" onclick="copiarLanding()">Copiar mensagem</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="counter-row" id="counterRow">
-    <div class="counter-avatars">
-      <div class="avatar">👷</div>
-      <div class="avatar">🏭</div>
-      <div class="avatar">🎓</div>
-    </div>
-    <div class="counter-text"><strong id="counterNum">0</strong> pessoas já na lista de espera</div>
-  </div>
-</section>
-
-<!-- PROBLEMAS -->
-<section class="section reveal">
-  <div class="container">
-    <div class="sec-head">
-      <div class="sec-label-line">O problema que resolvemos</div>
-      <h2 class="sec-h">Três lados do mercado,<br>três dores não resolvidas</h2>
-      <p class="sec-p">Profissionais que sabem fazer mas não encontram clientes. Empresas que precisam mas não sabem em quem confiar. Recém-formados sem porta de entrada.</p>
-    </div>
-    <div class="problems-grid">
-      <div class="prob prob-teal">
-        <div class="prob-stripe stripe-teal"></div>
-        <div class="prob-who"><span>👷</span>Profissional SST</div>
-        <h3>Sabe fazer, mas não consegue clientes</h3>
-        <ul>
-          <li>Depende 100% de indicações para trabalhar</li>
-          <li>Não sabe quanto cobrar e perde para quem cobra barato</li>
-          <li>Renda instável e irregular como autônomo</li>
-          <li>Sem portfólio digital para mostrar credibilidade</li>
-        </ul>
-      </div>
-      <div class="prob prob-amber">
-        <div class="prob-stripe stripe-amber"></div>
-        <div class="prob-who"><span>🏭</span>Empresa / RH</div>
-        <h3>Precisa dos serviços, mas não sabe em quem confiar</h3>
-        <ul>
-          <li>Impossível saber se o profissional é realmente qualificado</li>
-          <li>Preços muito variados, sem referência de mercado</li>
-          <li>Já pagou por documentos fora da norma</li>
-          <li>Não sabe quais documentos sua empresa precisa</li>
-        </ul>
-      </div>
-      <div class="prob prob-blue">
-        <div class="prob-stripe stripe-blue"></div>
-        <div class="prob-who"><span>🎓</span>Estudante / Recém-formado</div>
-        <h3>Tem o conhecimento, mas não tem a porta de entrada</h3>
-        <ul>
-          <li>Formado mas fora do mercado de SST</li>
-          <li>Mercado exige experiência que ainda não tem</li>
-          <li>Não sabe como captar o primeiro cliente autônomo</li>
-          <li>Sem portfólio nem referência de preços</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COMO FUNCIONA -->
-<section class="section reveal" style="padding-top:0">
-  <div class="container">
-    <div class="sec-head" style="margin-bottom:32px">
-      <div class="sec-label-line">Como funciona</div>
-      <h2 class="sec-h">Simples para os dois lados</h2>
-      <p class="sec-p">Empresa publica o que precisa. Profissional envia orçamento. Tudo monitorado, com prazo garantido e avaliação ao final.</p>
-    </div>
-    <div class="how-tabs">
-      <button class="how-tab active" onclick="switchHow('emp',this)">🏭 Para empresas</button>
-      <button class="how-tab" onclick="switchHow('prof',this)">👷 Para profissionais</button>
-      <button class="how-tab" onclick="switchHow('est',this)">🎓 Para estudantes</button>
-    </div>
-    <div class="how-pane active" id="how-emp">
-      <div class="how-step"><div class="how-num">01</div><div class="how-icon">🔍</div><div class="how-label2">Busca o serviço</div><div class="how-note">Seleciona o tipo de documento SST que precisa</div></div>
-      <div class="how-step"><div class="how-num">02</div><div class="how-icon">📋</div><div class="how-label2">Publica demanda</div><div class="how-note">Informa prazo, cidade e detalhes</div></div>
-      <div class="how-step"><div class="how-num">03</div><div class="how-icon">📨</div><div class="how-label2">Recebe propostas</div><div class="how-note">3–5 orçamentos de profissionais próximos</div></div>
-      <div class="how-step"><div class="how-num">04</div><div class="how-icon">⚖️</div><div class="how-label2">Compara e escolhe</div><div class="how-note">Perfil, avaliações, preço e prazo</div></div>
-      <div class="how-step"><div class="how-num">05</div><div class="how-icon">⭐</div><div class="how-label2">Avalia a entrega</div><div class="how-note">Nota pública garante qualidade</div></div>
-    </div>
-    <div class="how-pane" id="how-prof">
-      <div class="how-step"><div class="how-num">01</div><div class="how-icon">👤</div><div class="how-label2">Cria perfil</div><div class="how-note">Especialidades, região e formação</div></div>
-      <div class="how-step"><div class="how-num">02</div><div class="how-icon">🔔</div><div class="how-label2">Recebe alerta</div><div class="how-note">Nova demanda compatível na sua região</div></div>
-      <div class="how-step"><div class="how-num">03</div><div class="how-icon">📝</div><div class="how-label2">Envia proposta</div><div class="how-note">Valor, prazo e metodologia</div></div>
-      <div class="how-step"><div class="how-num">04</div><div class="how-icon">🤝</div><div class="how-label2">É escolhido</div><div class="how-note">Prazo e combinados registrados</div></div>
-      <div class="how-step"><div class="how-num">05</div><div class="how-icon">⭐</div><div class="how-label2">Acumula reputação</div><div class="how-note">Avaliações constroem seu portfólio</div></div>
-    </div>
-    <div class="how-pane" id="how-est">
-      <div class="how-step"><div class="how-num">01</div><div class="how-icon">🎓</div><div class="how-label2">Cria perfil júnior</div><div class="how-note">Formação e áreas de interesse</div></div>
-      <div class="how-step"><div class="how-num">02</div><div class="how-icon">📌</div><div class="how-label2">Acessa projetos menores</div><div class="how-note">Demandas ideais para quem está começando</div></div>
-      <div class="how-step"><div class="how-num">03</div><div class="how-icon">🧑‍🏫</div><div class="how-label2">Recebe mentoria</div><div class="how-note">Sênior revisa e orienta sua entrega</div></div>
-      <div class="how-step"><div class="how-num">04</div><div class="how-icon">📄</div><div class="how-label2">Usa templates</div><div class="how-note">Modelos validados de PGR, PCMSO e mais</div></div>
-      <div class="how-step"><div class="how-num">05</div><div class="how-icon">📈</div><div class="how-label2">Constrói portfólio</div><div class="how-note">Avaliações reais abrem o mercado</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- FUNCIONALIDADES -->
-<section class="section reveal" style="padding-top:0">
-  <div class="container">
-    <div class="sec-label-line">O que vai ter</div>
-    <h2 class="sec-h">Tudo que o mercado de SST<br>precisava ter</h2>
-    <div class="features-grid">
-      <div class="feat">
-        <div class="feat-icon">📍</div>
-        <div><h4>Busca por localização</h4><p>Empresas encontram profissionais no seu município ou raio de até X km. Geolocalização automática.</p><span class="feat-badge fb-mvp">MVP</span></div>
-      </div>
-      <div class="feat">
-        <div class="feat-icon">📊</div>
-        <div><h4>Comparação de orçamentos</h4><p>Receba múltiplas propostas lado a lado — preço, prazo, perfil e avaliações de cada profissional.</p><span class="feat-badge fb-mvp">MVP</span></div>
-      </div>
-      <div class="feat">
-        <div class="feat-icon">⏱</div>
-        <div><h4>Monitoramento de prazo</h4><p>Prazo acordado fica registrado no sistema. Alertas automáticos por e-mail e WhatsApp para ambas as partes.</p><span class="feat-badge fb-mvp">MVP</span></div>
-      </div>
-      <div class="feat">
-        <div class="feat-icon">⭐</div>
-        <div><h4>Avaliações verificadas</h4><p>Apenas quem contratou pode avaliar. Histórico público de entregas constrói credibilidade real.</p><span class="feat-badge fb-mvp">MVP</span></div>
-      </div>
-      <div class="feat">
-        <div class="feat-icon">💬</div>
-        <div><h4>Chat interno</h4><p>Comunicação entre empresa e profissional dentro da plataforma. Sem precisar trocar contato antes de fechar.</p><span class="feat-badge fb-mvp">MVP</span></div>
-      </div>
-      <div class="feat">
-        <div class="feat-icon">📋</div>
-        <div><h4>Guia de documentos obrigatórios</h4><p>Informe o porte e CNAE da sua empresa — receba a lista exata de documentos SST exigidos por lei.</p><span class="feat-badge fb-v1">V1</span></div>
-      </div>
-      <div class="feat">
-        <div class="feat-icon">💰</div>
-        <div><h4>Tabela de preços de referência</h4><p>Faixas de preço mínimo, médio e máximo por tipo de serviço e região. Acabou a guerra de preços.</p><span class="feat-badge fb-v1">V1</span></div>
-      </div>
-      <div class="feat">
-        <div class="feat-icon">🔒</div>
-        <div><h4>Pagamento com custódia</h4><p>Empresa paga ao fechar. Plataforma libera ao profissional após confirmação da entrega. Seguro para os dois lados.</p><span class="feat-badge fb-v1">V1</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA FINAL -->
-<section class="cta-final reveal">
-  <div class="cta-glow"></div>
-  <div class="container">
-    <h2>Pronto para transformar<br>o mercado de <em>SST</em>?</h2>
-    <p>Entre na lista de espera e seja um dos primeiros a ter acesso quando o beta abrir.</p>
-    <div class="form-wrap" style="margin:0 auto">
-      <div id="formBox2">
-        <div id="formError2" class="form-error">Preencha todos os campos corretamente.</div>
-        <div class="form-row">
-          <input type="text" id="wName2" class="form-input" placeholder="Seu nome">
+  <div class="screen active" id="s0">
+    <div class="card-tag">Início · Selecione seu perfil</div>
+    <div class="card-body">
+      <div class="screen-title">Quem é você?</div>
+      <div class="screen-sub">Selecione o perfil que melhor representa sua situação.</div>
+      <div class="profile-grid">
+        <div class="p-card" id="pp-prof" onclick="selectProfile('prof')">
+          <span class="p-icon">👷</span>
+          <div class="p-label">Profissional SST</div>
+          <div class="p-desc">Técnico, Engenheiro ou Médico do Trabalho</div>
         </div>
-        <div class="form-row">
-          <input type="email" id="wEmail2" class="form-input" placeholder="Seu melhor e-mail">
-          <select id="wPerfil2" class="form-select">
-            <option value="" disabled selected>Perfil</option>
-            <option value="Profissional SST">👷 Profissional</option>
-            <option value="Empresa / RH">🏭 Empresa</option>
-            <option value="Estudante / Recém-formado">🎓 Estudante</option>
-          </select>
+        <div class="p-card" id="pp-emp" onclick="selectProfile('emp')">
+          <span class="p-icon">🏭</span>
+          <div class="p-label">Empresa / RH</div>
+          <div class="p-desc">Contratante de serviços de segurança do trabalho</div>
         </div>
-        <button class="btn-submit" onclick="entrarLista2()">Entrar na lista de espera →</button>
-        <div class="form-note">Gratuito · Sem spam · Você será avisado no lançamento</div>
+        <div class="p-card" id="pp-est" onclick="selectProfile('est')">
+          <span class="p-icon">🎓</span>
+          <div class="p-label">Estudante</div>
+          <div class="p-desc">Em formação ou recém-formado fora do mercado</div>
+        </div>
       </div>
-      <div id="formSuccess2" class="form-success">
-        <span class="success-icon">✅</span>
-        <div class="success-title">Você está na lista!</div>
-        <div class="success-sub">Te avisaremos assim que o beta abrir. Fique de olho no seu e-mail!</div>
+      <div class="q-block" style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border)">
+        <label class="q-label" for="qEmail">Seu e-mail <span style="color:#c0392b;margin-left:2px">*</span></label>
+        <input type="email" id="qEmail" class="q-textarea" style="min-height:auto;padding:10px 14px;resize:none"
+               placeholder="seuemail@exemplo.com" autocomplete="email"
+               oninput="this.style.borderColor='';document.getElementById('emailErro').style.display='none'">
+        <div id="emailErro" style="display:none;margin-top:6px;font-size:12px;color:#c0392b;font-weight:500">
+          ⚠ Por favor, informe um e-mail válido para continuar.
+        </div>
+      </div>
+    </div>
+    <div class="card-nav">
+      <span class="step-counter">Passo 1 de 4</span>
+      <button class="btn btn-primary" id="btnNext0" onclick="goNext()" disabled>Continuar →</button>
+    </div>
+  </div>
+
+  <div class="screen" id="s-p1">
+    <div class="card-tag">Profissional SST · Parte 1 — Perfil</div>
+    <div class="card-body">
+      <div class="screen-title">Sua atuação no mercado</div>
+      <div class="q-block">
+        <label class="q-label">1. Há quanto tempo você atua na área de SST?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qP1" value="Menos de 1 ano"><span class="opt-text">Menos de 1 ano</span></label>
+          <label class="opt"><input type="radio" name="qP1" value="1 a 3 anos"><span class="opt-text">1 a 3 anos</span></label>
+          <label class="opt"><input type="radio" name="qP1" value="3 a 7 anos"><span class="opt-text">3 a 7 anos</span></label>
+          <label class="opt"><input type="radio" name="qP1" value="Mais de 7 anos"><span class="opt-text">Mais de 7 anos</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">2. Você trabalha como: <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="chip-grid" id="qP2">
+          <div class="chip" onclick="toggleChip(this)">CLT / empregado</div>
+          <div class="chip" onclick="toggleChip(this)">Autônomo / freelancer</div>
+          <div class="chip" onclick="toggleChip(this)">Sócio de empresa SST</div>
+          <div class="chip" onclick="toggleChip(this)">Servidor público</div>
+          <div class="chip" onclick="toggleChip(this)">Consultor independente</div>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">3. Quais serviços você oferece ou pode oferecer? <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="chip-grid" id="qP3">
+          <div class="chip" onclick="toggleChip(this)">PGR / PGRTR</div>
+          <div class="chip" onclick="toggleChip(this)">PCMSO</div>
+          <div class="chip" onclick="toggleChip(this)">LTCAT</div>
+          <div class="chip" onclick="toggleChip(this)">Laudo Insalubridade</div>
+          <div class="chip" onclick="toggleChip(this)">Laudo Periculosidade</div>
+          <div class="chip" onclick="toggleChip(this)">CIPA</div>
+          <div class="chip" onclick="toggleChip(this)">NR-12</div>
+          <div class="chip" onclick="toggleChip(this)">Treinamentos NR</div>
+          <div class="chip" onclick="toggleChip(this)">SESMT</div>
+          <div class="chip" onclick="toggleChip(this)">ASO / Exames</div>
+          <div class="chip" onclick="toggleChip(this)">PPP</div>
+          <div class="chip" onclick="toggleChip(this)">eSocial SST</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-nav">
+      <span class="step-counter">Passo 2 de 4</span>
+      <div style="display:flex;gap:10px">
+        <button class="btn" onclick="goBack()">← Voltar</button>
+        <button class="btn btn-primary" onclick="goNext()">Continuar →</button>
       </div>
     </div>
   </div>
-</section>
 
-<footer>
-  <div class="footer-brand">SST<span>Market</span></div>
-  <div class="footer-copy">© 2026 · Marketplace de Saúde e Segurança do Trabalho · Brasil</div>
-</footer>
+  <div class="screen" id="s-p2">
+    <div class="card-tag">Profissional SST · Parte 2 — Dores</div>
+    <div class="card-body">
+      <div class="screen-title">Desafios e intenção de uso</div>
+      <div class="q-block">
+        <label class="q-label">4. Como divulga seus serviços hoje? <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="chip-grid" id="qP4">
+          <div class="chip" onclick="toggleChip(this)">Boca a boca</div>
+          <div class="chip" onclick="toggleChip(this)">Instagram / redes</div>
+          <div class="chip" onclick="toggleChip(this)">LinkedIn</div>
+          <div class="chip" onclick="toggleChip(this)">WhatsApp</div>
+          <div class="chip" onclick="toggleChip(this)">Site próprio</div>
+          <div class="chip" onclick="toggleChip(this)">Google Meu Negócio</div>
+          <div class="chip" onclick="toggleChip(this)">Não divulgo</div>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">5. Qual é sua maior dificuldade hoje? <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="opt-list">
+          <label class="opt"><input type="checkbox" name="qP5" value="Conseguir novos clientes"><span class="opt-text">Conseguir novos clientes</span></label>
+          <label class="opt"><input type="checkbox" name="qP5" value="Não saber quanto cobrar"><span class="opt-text">Não saber quanto cobrar pelos serviços</span></label>
+          <label class="opt"><input type="checkbox" name="qP5" value="Concorrência de preço baixo"><span class="opt-text">Concorrência com preços muito baixos</span></label>
+          <label class="opt"><input type="checkbox" name="qP5" value="Falta de credibilidade e portfólio"><span class="opt-text">Falta de credibilidade / portfólio</span></label>
+          <label class="opt"><input type="checkbox" name="qP5" value="Renda instável como autônomo"><span class="opt-text">Renda instável como autônomo</span></label>
+          <label class="opt"><input type="checkbox" name="qP5" value="Dificuldade em acompanhar prazos"><span class="opt-text">Dificuldade em acompanhar prazos e entregas</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">6. Você usaria uma plataforma onde empresas publicam demandas e você envia orçamentos?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qP6" value="Sim, com certeza"><span class="opt-text">Sim, com certeza — era o que me faltava</span></label>
+          <label class="opt"><input type="radio" name="qP6" value="Sim, dependendo das condições"><span class="opt-text">Sim, dependendo das condições e taxas</span></label>
+          <label class="opt"><input type="radio" name="qP6" value="Talvez"><span class="opt-text">Talvez — precisaria conhecer melhor</span></label>
+          <label class="opt"><input type="radio" name="qP6" value="Não"><span class="opt-text">Não usaria</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">7. Quanto pagaria mensalmente por acesso garantido a clientes?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qP7" value="Nada — deveria ser gratuito"><span class="opt-text">Nada — deveria ser gratuito para o profissional</span></label>
+          <label class="opt"><input type="radio" name="qP7" value="Até R$ 50/mês"><span class="opt-text">Até R$ 50/mês</span></label>
+          <label class="opt"><input type="radio" name="qP7" value="Até R$ 100/mês"><span class="opt-text">Até R$ 100/mês</span></label>
+          <label class="opt"><input type="radio" name="qP7" value="Até R$ 200/mês"><span class="opt-text">Até R$ 200/mês</span></label>
+          <label class="opt"><input type="radio" name="qP7" value="Prefiro pagar comissão por negócio fechado"><span class="opt-text">Prefiro pagar comissão por negócio fechado (ex: 5–10%)</span></label>
+        </div>
+      </div>
+    </div>
+    <div class="card-nav">
+      <span class="step-counter">Passo 3 de 4</span>
+      <div style="display:flex;gap:10px">
+        <button class="btn" onclick="goBack()">← Voltar</button>
+        <button class="btn btn-primary" onclick="goNext()">Continuar →</button>
+      </div>
+    </div>
+  </div>
 
+  <div class="screen" id="s-p3">
+    <div class="card-tag">Profissional SST · Parte 3 — Negócio e mercado</div>
+    <div class="card-body">
+      <div class="screen-title">Mais sobre sua atuação</div>
+      <div class="q-block">
+        <label class="q-label">8. Qual é sua renda média mensal como profissional de SST autônomo?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qP8" value="Menos de R$ 1.000"><span class="opt-text">Menos de R$ 1.000</span></label>
+          <label class="opt"><input type="radio" name="qP8" value="R$ 1.000 a R$ 3.000"><span class="opt-text">R$ 1.000 a R$ 3.000</span></label>
+          <label class="opt"><input type="radio" name="qP8" value="R$ 3.000 a R$ 6.000"><span class="opt-text">R$ 3.000 a R$ 6.000</span></label>
+          <label class="opt"><input type="radio" name="qP8" value="R$ 6.000 a R$ 10.000"><span class="opt-text">R$ 6.000 a R$ 10.000</span></label>
+          <label class="opt"><input type="radio" name="qP8" value="Mais de R$ 10.000"><span class="opt-text">Mais de R$ 10.000</span></label>
+          <label class="opt"><input type="radio" name="qP8" value="Prefiro não informar"><span class="opt-text">Prefiro não informar</span></label>
+          <label class="opt"><input type="radio" name="qP8" value="Não atuo como autônomo"><span class="opt-text">Não atuo como autônomo</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">9. Quantos clientes ativos você atende por mês em média?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qP9" value="Nenhum — estou buscando"><span class="opt-text">Nenhum — estou buscando</span></label>
+          <label class="opt"><input type="radio" name="qP9" value="1 a 2"><span class="opt-text">1 a 2</span></label>
+          <label class="opt"><input type="radio" name="qP9" value="3 a 5"><span class="opt-text">3 a 5</span></label>
+          <label class="opt"><input type="radio" name="qP9" value="6 a 10"><span class="opt-text">6 a 10</span></label>
+          <label class="opt"><input type="radio" name="qP9" value="Mais de 10"><span class="opt-text">Mais de 10</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">10. Você já perdeu um contrato porque não conseguiu responder a tempo?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qP10" value="Sim, acontece com frequência"><span class="opt-text">Sim, acontece com frequência</span></label>
+          <label class="opt"><input type="radio" name="qP10" value="Sim, já aconteceu algumas vezes"><span class="opt-text">Sim, já aconteceu algumas vezes</span></label>
+          <label class="opt"><input type="radio" name="qP10" value="Raramente"><span class="opt-text">Raramente</span></label>
+          <label class="opt"><input type="radio" name="qP10" value="Nunca"><span class="opt-text">Nunca</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">11. Tempo médio entre o primeiro contato e o fechamento do contrato:</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qP11" value="Menos de 1 dia"><span class="opt-text">Menos de 1 dia</span></label>
+          <label class="opt"><input type="radio" name="qP11" value="2 a 5 dias"><span class="opt-text">2 a 5 dias</span></label>
+          <label class="opt"><input type="radio" name="qP11" value="1 a 2 semanas"><span class="opt-text">1 a 2 semanas</span></label>
+          <label class="opt"><input type="radio" name="qP11" value="Mais de 2 semanas"><span class="opt-text">Mais de 2 semanas</span></label>
+          <label class="opt"><input type="radio" name="qP11" value="Raramente fecho — o cliente desiste"><span class="opt-text">Raramente fecho — o cliente desiste</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">12. O que normalmente faz um cliente desistir de contratar você?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qP12" value="Preço mais alto que a concorrência"><span class="opt-text">Preço mais alto que a concorrência</span></label>
+          <label class="opt"><input type="radio" name="qP12" value="Demora para responder"><span class="opt-text">Demora para responder</span></label>
+          <label class="opt"><input type="radio" name="qP12" value="Falta de referências ou portfólio"><span class="opt-text">Falta de referências ou portfólio</span></label>
+          <label class="opt"><input type="radio" name="qP12" value="O cliente achou alguém por indicação"><span class="opt-text">O cliente achou alguém por indicação antes</span></label>
+          <label class="opt"><input type="radio" name="qP12" value="Não sei — simplesmente some"><span class="opt-text">Não sei — simplesmente some</span></label>
+          <label class="opt"><input type="radio" name="qP12" value="Não tenho esse problema"><span class="opt-text">Não tenho esse problema</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">13. Você emite nota fiscal pelos seus serviços?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qP13" value="Sim, sempre — tenho CNPJ"><span class="opt-text">Sim, sempre — tenho CNPJ</span></label>
+          <label class="opt"><input type="radio" name="qP13" value="Às vezes, quando o cliente exige"><span class="opt-text">Às vezes, quando o cliente exige</span></label>
+          <label class="opt"><input type="radio" name="qP13" value="Não — trabalho como pessoa física"><span class="opt-text">Não — trabalho como pessoa física</span></label>
+          <label class="opt"><input type="radio" name="qP13" value="Não sei como fazer"><span class="opt-text">Não sei como fazer</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">14. Você consideraria mentorar ou orientar profissionais recém-formados de SST?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qP14" value="Sim, tenho interesse e disponibilidade"><span class="opt-text">Sim, tenho interesse e disponibilidade</span></label>
+          <label class="opt"><input type="radio" name="qP14" value="Sim, mas não sei como fazer isso remunerado"><span class="opt-text">Sim, mas não sei como fazer isso de forma remunerada</span></label>
+          <label class="opt"><input type="radio" name="qP14" value="Talvez — dependeria das condições"><span class="opt-text">Talvez — dependeria das condições</span></label>
+          <label class="opt"><input type="radio" name="qP14" value="Não tenho interesse"><span class="opt-text">Não tenho interesse</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">14. Se a plataforma existisse hoje, você a indicaria para colegas?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qPU1" value="Sim, com certeza — já tenho pessoas em mente"><span class="opt-text">Sim, com certeza — já tenho pessoas em mente</span></label>
+          <label class="opt"><input type="radio" name="qPU1" value="Provavelmente sim"><span class="opt-text">Provavelmente sim</span></label>
+          <label class="opt"><input type="radio" name="qPU1" value="Talvez"><span class="opt-text">Talvez</span></label>
+          <label class="opt"><input type="radio" name="qPU1" value="Não"><span class="opt-text">Não</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">15. O que faria você NUNCA usar uma plataforma como essa? <span class="q-hint">(resposta aberta)</span></label>
+        <textarea class="q-textarea" id="qPU2" placeholder="Compartilhe suas objeções ou preocupações..."></textarea>
+      </div>
+      <div class="q-block">
+        <label class="q-label">16. Você conhece alguma plataforma parecida que já usa ou usou? <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="chip-grid" id="qPU3">
+          <div class="chip" onclick="toggleChip(this)">GetNinjas</div>
+          <div class="chip" onclick="toggleChip(this)">Workana</div>
+          <div class="chip" onclick="toggleChip(this)">Freelancer.com</div>
+          <div class="chip" onclick="toggleChip(this)">LinkedIn (busca direta)</div>
+          <div class="chip" onclick="toggleChip(this)">Não conheço nenhuma</div>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">17. Comentário ou sugestão final <span class="q-hint">(opcional)</span></label>
+        <textarea class="q-textarea" id="qP_com" placeholder="Compartilhe qualquer dor ou experiência que queira..."></textarea>
+      </div>
+    </div>
+    <div class="card-nav">
+      <span class="step-counter">Passo 4 de 4</span>
+      <div style="display:flex;gap:10px">
+        <button class="btn" onclick="goBack()">← Voltar</button>
+        <button class="btn btn-primary" onclick="enviarResposta()">Enviar resposta ✓</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen" id="s-e1">
+    <div class="card-tag">Empresa / RH · Parte 1 — Perfil</div>
+    <div class="card-body">
+      <div class="screen-title">Sua empresa e o SST</div>
+      <div class="q-block">
+        <label class="q-label">1. Quantos funcionários sua empresa tem?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qE1" value="Até 10 (MEI / microempresa)"><span class="opt-text">Até 10 funcionários (MEI / microempresa)</span></label>
+          <label class="opt"><input type="radio" name="qE1" value="11 a 50"><span class="opt-text">11 a 50 funcionários</span></label>
+          <label class="opt"><input type="radio" name="qE1" value="51 a 200"><span class="opt-text">51 a 200 funcionários</span></label>
+          <label class="opt"><input type="radio" name="qE1" value="Mais de 200"><span class="opt-text">Mais de 200 funcionários</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">2. Qual é o setor de atuação da sua empresa?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qE2" value="Indústria / manufatura"><span class="opt-text">Indústria / manufatura</span></label>
+          <label class="opt"><input type="radio" name="qE2" value="Construção civil"><span class="opt-text">Construção civil</span></label>
+          <label class="opt"><input type="radio" name="qE2" value="Comércio"><span class="opt-text">Comércio</span></label>
+          <label class="opt"><input type="radio" name="qE2" value="Serviços"><span class="opt-text">Serviços</span></label>
+          <label class="opt"><input type="radio" name="qE2" value="Agronegócio / rural"><span class="opt-text">Agronegócio / rural</span></label>
+          <label class="opt"><input type="radio" name="qE2" value="Saúde"><span class="opt-text">Saúde</span></label>
+          <label class="opt"><input type="radio" name="qE2" value="Logística / transporte"><span class="opt-text">Logística / transporte</span></label>
+          <label class="opt"><input type="radio" name="qE2" value="Outro"><span class="opt-text">Outro</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">3. Como contrata SST hoje? <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="chip-grid" id="qE3b">
+          <div class="chip" onclick="toggleChip(this)">Indicação de conhecidos</div>
+          <div class="chip" onclick="toggleChip(this)">Google / internet</div>
+          <div class="chip" onclick="toggleChip(this)">Empresa terceirizada fixa</div>
+          <div class="chip" onclick="toggleChip(this)">SESMT próprio</div>
+          <div class="chip" onclick="toggleChip(this)">Sindicato / SESI</div>
+          <div class="chip" onclick="toggleChip(this)">Ainda não contrato</div>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">4. Quais serviços sua empresa já precisou? <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="chip-grid" id="qE3">
+          <div class="chip" onclick="toggleChip(this)">PGR / PGRTR</div>
+          <div class="chip" onclick="toggleChip(this)">PCMSO</div>
+          <div class="chip" onclick="toggleChip(this)">LTCAT</div>
+          <div class="chip" onclick="toggleChip(this)">Laudo Insalubridade</div>
+          <div class="chip" onclick="toggleChip(this)">Laudo Periculosidade</div>
+          <div class="chip" onclick="toggleChip(this)">CIPA</div>
+          <div class="chip" onclick="toggleChip(this)">Treinamentos NR</div>
+          <div class="chip" onclick="toggleChip(this)">ASO / Exames</div>
+          <div class="chip" onclick="toggleChip(this)">eSocial SST</div>
+          <div class="chip" onclick="toggleChip(this)">PPP</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-nav">
+      <span class="step-counter">Passo 2 de 4</span>
+      <div style="display:flex;gap:10px">
+        <button class="btn" onclick="goBack()">← Voltar</button>
+        <button class="btn btn-primary" onclick="goNext()">Continuar →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen" id="s-e2">
+    <div class="card-tag">Empresa / RH · Parte 2 — Dores</div>
+    <div class="card-body">
+      <div class="screen-title">Dores e expectativas</div>
+      <div class="q-block">
+        <label class="q-label">5. Maiores dificuldades ao contratar SST? <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="opt-list">
+          <label class="opt"><input type="checkbox" name="qE4" value="Não saber quem é confiável e qualificado"><span class="opt-text">Não saber quem é confiável e qualificado</span></label>
+          <label class="opt"><input type="checkbox" name="qE4" value="Preços variados sem referência de mercado"><span class="opt-text">Preços variados sem referência de mercado</span></label>
+          <label class="opt"><input type="checkbox" name="qE4" value="Demora na entrega dos documentos"><span class="opt-text">Demora na entrega dos documentos</span></label>
+          <label class="opt"><input type="checkbox" name="qE4" value="Não saber quais documentos precisa"><span class="opt-text">Não saber quais documentos minha empresa precisa</span></label>
+          <label class="opt"><input type="checkbox" name="qE4" value="Falta de acompanhamento pós-entrega"><span class="opt-text">Falta de acompanhamento e suporte pós-entrega</span></label>
+          <label class="opt"><input type="checkbox" name="qE4" value="Dificuldade de achar profissional na região"><span class="opt-text">Dificuldade de achar profissional na minha região</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">6. Usaria uma plataforma para buscar profissionais de SST e receber orçamentos?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qE5" value="Sim, com certeza"><span class="opt-text">Sim, com certeza — seria muito mais prático</span></label>
+          <label class="opt"><input type="radio" name="qE5" value="Sim, se houvesse avaliações"><span class="opt-text">Sim, se houvesse avaliações e garantias</span></label>
+          <label class="opt"><input type="radio" name="qE5" value="Talvez"><span class="opt-text">Talvez — dependeria dos profissionais disponíveis</span></label>
+          <label class="opt"><input type="radio" name="qE5" value="Não"><span class="opt-text">Não usaria</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">7. O que mais importaria na plataforma? <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="chip-grid" id="qE6">
+          <div class="chip" onclick="toggleChip(this)">Avaliações dos profissionais</div>
+          <div class="chip" onclick="toggleChip(this)">Preço transparente</div>
+          <div class="chip" onclick="toggleChip(this)">Prazo de entrega garantido</div>
+          <div class="chip" onclick="toggleChip(this)">Profissional perto de mim</div>
+          <div class="chip" onclick="toggleChip(this)">Suporte pós-entrega</div>
+          <div class="chip" onclick="toggleChip(this)">Comparar orçamentos</div>
+          <div class="chip" onclick="toggleChip(this)">Chat com profissional</div>
+          <div class="chip" onclick="toggleChip(this)">Pagamento seguro</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-nav">
+      <span class="step-counter">Passo 3 de 4</span>
+      <div style="display:flex;gap:10px">
+        <button class="btn" onclick="goBack()">← Voltar</button>
+        <button class="btn btn-primary" onclick="goNext()">Continuar →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen" id="s-e3">
+    <div class="card-tag">Empresa / RH · Parte 3 — Comportamento</div>
+    <div class="card-body">
+      <div class="screen-title">Comportamento de compra</div>
+      <div class="q-block">
+        <label class="q-label">8. Com que frequência sua empresa contrata serviços de SST?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qE7" value="Uma vez por ano"><span class="opt-text">Uma vez por ano (renovação de documentos)</span></label>
+          <label class="opt"><input type="radio" name="qE7" value="A cada 6 meses"><span class="opt-text">A cada 6 meses</span></label>
+          <label class="opt"><input type="radio" name="qE7" value="Trimestralmente"><span class="opt-text">Trimestralmente</span></label>
+          <label class="opt"><input type="radio" name="qE7" value="Conforme necessidade"><span class="opt-text">Conforme necessidade — sem regularidade</span></label>
+          <label class="opt"><input type="radio" name="qE7" value="Nunca contratou ainda"><span class="opt-text">Nunca contratou ainda</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">9. Qual o valor médio que sua empresa já pagou por um serviço de SST?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qE8" value="Menos de R$ 500"><span class="opt-text">Menos de R$ 500</span></label>
+          <label class="opt"><input type="radio" name="qE8" value="R$ 500 a R$ 1.500"><span class="opt-text">R$ 500 a R$ 1.500</span></label>
+          <label class="opt"><input type="radio" name="qE8" value="R$ 1.500 a R$ 5.000"><span class="opt-text">R$ 1.500 a R$ 5.000</span></label>
+          <label class="opt"><input type="radio" name="qE8" value="R$ 5.000 a R$ 15.000"><span class="opt-text">R$ 5.000 a R$ 15.000</span></label>
+          <label class="opt"><input type="radio" name="qE8" value="Mais de R$ 15.000"><span class="opt-text">Mais de R$ 15.000</span></label>
+          <label class="opt"><input type="radio" name="qE8" value="Nunca contratou"><span class="opt-text">Nunca contratou</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">10. Ao escolher um profissional de SST, o que pesa mais na decisão? <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="chip-grid" id="qE9">
+          <div class="chip" onclick="toggleChip(this)">Preço</div>
+          <div class="chip" onclick="toggleChip(this)">Indicação de confiança</div>
+          <div class="chip" onclick="toggleChip(this)">Avaliações e histórico</div>
+          <div class="chip" onclick="toggleChip(this)">Velocidade de resposta</div>
+          <div class="chip" onclick="toggleChip(this)">Proximidade geográfica</div>
+          <div class="chip" onclick="toggleChip(this)">Registro MTE ou CREA</div>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">11. Sua empresa já teve problema com um serviço de SST contratado?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qE10" value="Sim — documento fora da norma"><span class="opt-text">Sim — documento entregue fora da norma</span></label>
+          <label class="opt"><input type="radio" name="qE10" value="Sim — prazo não cumprido"><span class="opt-text">Sim — prazo não cumprido</span></label>
+          <label class="opt"><input type="radio" name="qE10" value="Sim — profissional sumiu após receber"><span class="opt-text">Sim — profissional sumiu após receber</span></label>
+          <label class="opt"><input type="radio" name="qE10" value="Sim — documento genérico sem visita"><span class="opt-text">Sim — documento genérico sem visita ao local</span></label>
+          <label class="opt"><input type="radio" name="qE10" value="Não tive problemas"><span class="opt-text">Não tive problemas</span></label>
+          <label class="opt"><input type="radio" name="qE10" value="Nunca contratei"><span class="opt-text">Nunca contratei</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">12. Você pagaria mais por um profissional verificado pela plataforma (registro confirmado, histórico e avaliação mínima)?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qE11" value="Sim, até 10% a mais"><span class="opt-text">Sim, pagaria até 10% a mais</span></label>
+          <label class="opt"><input type="radio" name="qE11" value="Sim, até 20% a mais"><span class="opt-text">Sim, pagaria até 20% a mais</span></label>
+          <label class="opt"><input type="radio" name="qE11" value="Talvez — dependeria do serviço"><span class="opt-text">Talvez — dependeria do serviço</span></label>
+          <label class="opt"><input type="radio" name="qE11" value="Não — preço é o que decide"><span class="opt-text">Não — preço é o que decide</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">13. Se a plataforma existisse hoje, você a indicaria para colegas?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qEU1" value="Sim, com certeza — já tenho pessoas em mente"><span class="opt-text">Sim, com certeza — já tenho pessoas em mente</span></label>
+          <label class="opt"><input type="radio" name="qEU1" value="Provavelmente sim"><span class="opt-text">Provavelmente sim</span></label>
+          <label class="opt"><input type="radio" name="qEU1" value="Talvez"><span class="opt-text">Talvez</span></label>
+          <label class="opt"><input type="radio" name="qEU1" value="Não"><span class="opt-text">Não</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">14. O que faria você NUNCA usar uma plataforma como essa? <span class="q-hint">(resposta aberta)</span></label>
+        <textarea class="q-textarea" id="qEU2" placeholder="Compartilhe suas objeções ou preocupações..."></textarea>
+      </div>
+      <div class="q-block">
+        <label class="q-label">15. Você conhece alguma plataforma parecida que já usa ou usou? <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="chip-grid" id="qEU3">
+          <div class="chip" onclick="toggleChip(this)">GetNinjas</div>
+          <div class="chip" onclick="toggleChip(this)">Workana</div>
+          <div class="chip" onclick="toggleChip(this)">Freelancer.com</div>
+          <div class="chip" onclick="toggleChip(this)">LinkedIn (busca direta)</div>
+          <div class="chip" onclick="toggleChip(this)">Não conheço nenhuma</div>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">16. Comentário ou experiência <span class="q-hint">(opcional)</span></label>
+        <textarea class="q-textarea" id="qE_com" placeholder="Ex: Já fui enganado por empresa que entregou documento fora da norma..."></textarea>
+      </div>
+    </div>
+    <div class="card-nav">
+      <span class="step-counter">Passo 4 de 4</span>
+      <div style="display:flex;gap:10px">
+        <button class="btn" onclick="goBack()">← Voltar</button>
+        <button class="btn btn-primary" onclick="enviarResposta()">Enviar resposta ✓</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen" id="s-s1">
+    <div class="card-tag">Estudante · Parte 1 — Formação</div>
+    <div class="card-body">
+      <div class="screen-title">Sua formação e situação atual</div>
+      <div class="q-block">
+        <label class="q-label">1. Qual é seu nível de formação em SST?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qS1" value="Cursando técnico em SST"><span class="opt-text">Cursando técnico em Segurança do Trabalho</span></label>
+          <label class="opt"><input type="radio" name="qS1" value="Técnico em SST (formado)"><span class="opt-text">Técnico em SST (formado)</span></label>
+          <label class="opt"><input type="radio" name="qS1" value="Cursando Eng. de Segurança"><span class="opt-text">Cursando especialização em Eng. de Segurança</span></label>
+          <label class="opt"><input type="radio" name="qS1" value="Engenheiro de Segurança (formado)"><span class="opt-text">Engenheiro de Segurança do Trabalho (formado)</span></label>
+          <label class="opt"><input type="radio" name="qS1" value="Medicina do Trabalho"><span class="opt-text">Medicina do Trabalho — cursando ou formado</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">2. Há quanto tempo você concluiu sua formação principal?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qS2" value="Ainda estou cursando"><span class="opt-text">Ainda estou cursando</span></label>
+          <label class="opt"><input type="radio" name="qS2" value="Menos de 1 ano"><span class="opt-text">Menos de 1 ano</span></label>
+          <label class="opt"><input type="radio" name="qS2" value="1 a 2 anos"><span class="opt-text">1 a 2 anos</span></label>
+          <label class="opt"><input type="radio" name="qS2" value="3 a 5 anos"><span class="opt-text">3 a 5 anos</span></label>
+          <label class="opt"><input type="radio" name="qS2" value="Mais de 5 anos"><span class="opt-text">Mais de 5 anos</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">3. Você está atuando em SST atualmente?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qS3" value="Sim, empregado CLT"><span class="opt-text">Sim — empregado com carteira assinada</span></label>
+          <label class="opt"><input type="radio" name="qS3" value="Sim, autônomo"><span class="opt-text">Sim — de forma autônoma / freelancer</span></label>
+          <label class="opt"><input type="radio" name="qS3" value="Não, buscando emprego SST"><span class="opt-text">Não — estou buscando emprego na área</span></label>
+          <label class="opt"><input type="radio" name="qS3" value="Não, outra área"><span class="opt-text">Não — trabalho em outra área</span></label>
+          <label class="opt"><input type="radio" name="qS3" value="Não, sem trabalhar"><span class="opt-text">Não — estou sem trabalhar no momento</span></label>
+        </div>
+      </div>
+    </div>
+    <div class="card-nav">
+      <span class="step-counter">Passo 2 de 4</span>
+      <div style="display:flex;gap:10px">
+        <button class="btn" onclick="goBack()">← Voltar</button>
+        <button class="btn btn-primary" onclick="goNext()">Continuar →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen" id="s-s2">
+    <div class="card-tag">Estudante · Parte 2 — Barreiras</div>
+    <div class="card-body">
+      <div class="screen-title">Barreiras e oportunidades</div>
+      <div class="q-block">
+        <label class="q-label">4. Suas maiores barreiras para entrar no mercado de SST: <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="opt-list">
+          <label class="opt"><input type="checkbox" name="qS4" value="Falta de portfólio e experiência comprovada"><span class="opt-text">Falta de portfólio e experiência comprovada</span></label>
+          <label class="opt"><input type="checkbox" name="qS4" value="Não saber como captar clientes autônomos"><span class="opt-text">Não saber como captar clientes como autônomo</span></label>
+          <label class="opt"><input type="checkbox" name="qS4" value="Insegurança técnica para elaborar documentos"><span class="opt-text">Insegurança técnica para elaborar documentos</span></label>
+          <label class="opt"><input type="checkbox" name="qS4" value="Mercado exige experiência que não tenho"><span class="opt-text">Mercado exige experiência que ainda não tenho</span></label>
+          <label class="opt"><input type="checkbox" name="qS4" value="Não saber precificar os serviços"><span class="opt-text">Não saber como precificar meus serviços</span></label>
+          <label class="opt"><input type="checkbox" name="qS4" value="Falta de rede de contatos na área"><span class="opt-text">Falta de rede de contatos na área</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">5. Com uma plataforma que recebe pedidos de orçamento, você atuaria como autônomo?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qS5" value="Sim, com certeza"><span class="opt-text">Sim, com certeza — era o que me faltava</span></label>
+          <label class="opt"><input type="radio" name="qS5" value="Sim, mas precisaria de apoio técnico"><span class="opt-text">Sim, mas precisaria de mentoria ou apoio técnico</span></label>
+          <label class="opt"><input type="radio" name="qS5" value="Talvez"><span class="opt-text">Talvez — ainda tenho insegurança</span></label>
+          <label class="opt"><input type="radio" name="qS5" value="Não, prefiro CLT"><span class="opt-text">Não — prefiro trabalho fixo com carteira assinada</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">6. O que a plataforma precisaria oferecer para te ajudar? <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="chip-grid" id="qS6">
+          <div class="chip" onclick="toggleChip(this)">Templates de documentos</div>
+          <div class="chip" onclick="toggleChip(this)">Cursos e capacitação</div>
+          <div class="chip" onclick="toggleChip(this)">Mentoria com sênior</div>
+          <div class="chip" onclick="toggleChip(this)">Tabela de preços de referência</div>
+          <div class="chip" onclick="toggleChip(this)">Perfil público / portfólio</div>
+          <div class="chip" onclick="toggleChip(this)">Sistema de contratos</div>
+          <div class="chip" onclick="toggleChip(this)">Suporte jurídico</div>
+          <div class="chip" onclick="toggleChip(this)">Comunidade SST</div>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">7. Qual seria o maior atrativo de uma plataforma assim para você?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qS7" value="Ter acesso a clientes sem precisar me divulgar"><span class="opt-text">Ter acesso a clientes sem precisar me divulgar</span></label>
+          <label class="opt"><input type="radio" name="qS7" value="Construir portfólio com avaliações reais"><span class="opt-text">Construir portfólio e reputação com avaliações reais</span></label>
+          <label class="opt"><input type="radio" name="qS7" value="Ter referência de preços para cobrar justo"><span class="opt-text">Ter referência de preços para cobrar de forma justa</span></label>
+          <label class="opt"><input type="radio" name="qS7" value="Aprender com outros profissionais"><span class="opt-text">Aprender com outros profissionais e materiais</span></label>
+          <label class="opt"><input type="radio" name="qS7" value="Ter renda extra como freelancer"><span class="opt-text">Ter renda extra trabalhando como freelancer no tempo livre</span></label>
+        </div>
+      </div>
+    </div>
+    <div class="card-nav">
+      <span class="step-counter">Passo 3 de 4</span>
+      <div style="display:flex;gap:10px">
+        <button class="btn" onclick="goBack()">← Voltar</button>
+        <button class="btn btn-primary" onclick="goNext()">Continuar →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen" id="s-s3">
+    <div class="card-tag">Estudante · Parte 3 — Mercado</div>
+    <div class="card-body">
+      <div class="screen-title">Sua entrada no mercado</div>
+      <div class="q-block">
+        <label class="q-label">8. Qual foi sua maior dificuldade após se formar? <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="opt-list">
+          <label class="opt"><input type="checkbox" name="qS8" value="Não sabia como encontrar clientes"><span class="opt-text">Não sabia como encontrar clientes</span></label>
+          <label class="opt"><input type="checkbox" name="qS8" value="Inseguro para fazer documentos sozinho"><span class="opt-text">Me sentia inseguro para fazer documentos sozinho</span></label>
+          <label class="opt"><input type="checkbox" name="qS8" value="Não tinha com quem tirar dúvidas técnicas"><span class="opt-text">Não tinha com quem tirar dúvidas técnicas</span></label>
+          <label class="opt"><input type="checkbox" name="qS8" value="Clientes exigiam experiência comprovada"><span class="opt-text">Os clientes exigiam experiência comprovada</span></label>
+          <label class="opt"><input type="checkbox" name="qS8" value="Não sabia quanto cobrar"><span class="opt-text">Não sabia quanto cobrar pelos serviços</span></label>
+          <label class="opt"><input type="checkbox" name="qS8" value="Não consegui emprego CLT na área"><span class="opt-text">Não consegui emprego CLT na área</span></label>
+          <label class="opt"><input type="checkbox" name="qS8" value="Desisti e fui trabalhar em outra área"><span class="opt-text">Desisti e fui trabalhar em outra área</span></label>
+          <label class="opt"><input type="checkbox" name="qS8" value="Ainda estou cursando"><span class="opt-text">Ainda estou cursando — não me formei ainda</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">9. Se houvesse um projeto real com supervisão de um sênior, aceitaria receber menos em troca de experiência?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qS9" value="Sim, sem dúvida — preciso do portfólio"><span class="opt-text">Sim, sem dúvida — preciso do portfólio</span></label>
+          <label class="opt"><input type="radio" name="qS9" value="Sim, mas desconto pequeno até 20%"><span class="opt-text">Sim, mas só se o desconto fosse pequeno (até 20%)</span></label>
+          <label class="opt"><input type="radio" name="qS9" value="Talvez — dependeria do projeto"><span class="opt-text">Talvez — dependeria do projeto</span></label>
+          <label class="opt"><input type="radio" name="qS9" value="Não — meu tempo vale o preço cheio"><span class="opt-text">Não — meu tempo vale o preço cheio</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">10. O que te daria mais confiança para pegar seu primeiro cliente sozinho? <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="chip-grid" id="qS10">
+          <div class="chip" onclick="toggleChip(this)">Modelo de documento para editar</div>
+          <div class="chip" onclick="toggleChip(this)">Sênior disponível para revisar</div>
+          <div class="chip" onclick="toggleChip(this)">Tabela de preços de referência</div>
+          <div class="chip" onclick="toggleChip(this)">Checklist do que verificar em campo</div>
+          <div class="chip" onclick="toggleChip(this)">Contrato padrão para proteção legal</div>
+          <div class="chip" onclick="toggleChip(this)">Vídeos explicando como elaborar cada documento</div>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">11. Você toparia fazer um projeto piloto gratuito em troca de uma avaliação pública?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qS11" value="Sim — é exatamente o que preciso para começar"><span class="opt-text">Sim — é exatamente o que preciso para começar</span></label>
+          <label class="opt"><input type="radio" name="qS11" value="Sim, mas apenas uma vez"><span class="opt-text">Sim, mas apenas uma vez</span></label>
+          <label class="opt"><input type="radio" name="qS11" value="Talvez — precisaria avaliar o projeto"><span class="opt-text">Talvez — precisaria avaliar o projeto</span></label>
+          <label class="opt"><input type="radio" name="qS11" value="Não — não quero trabalhar de graça"><span class="opt-text">Não — não quero trabalhar de graça</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">12. Você tem registro como Técnico de Segurança (MTE) ou está em processo?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qS12" value="Sim, já tenho registro ativo"><span class="opt-text">Sim, já tenho registro ativo</span></label>
+          <label class="opt"><input type="radio" name="qS12" value="Estou aguardando o registro"><span class="opt-text">Estou aguardando o registro</span></label>
+          <label class="opt"><input type="radio" name="qS12" value="Ainda não solicitei"><span class="opt-text">Ainda não solicitei</span></label>
+          <label class="opt"><input type="radio" name="qS12" value="Não sei como obter"><span class="opt-text">Não sei como obter o registro</span></label>
+          <label class="opt"><input type="radio" name="qS12" value="Não se aplica — Eng./Médico"><span class="opt-text">Não se aplica — sou Engenheiro ou Médico do Trabalho</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">12. Se a plataforma existisse hoje, você a indicaria para colegas?</label>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="qSU1" value="Sim, com certeza — já tenho pessoas em mente"><span class="opt-text">Sim, com certeza — já tenho pessoas em mente</span></label>
+          <label class="opt"><input type="radio" name="qSU1" value="Provavelmente sim"><span class="opt-text">Provavelmente sim</span></label>
+          <label class="opt"><input type="radio" name="qSU1" value="Talvez"><span class="opt-text">Talvez</span></label>
+          <label class="opt"><input type="radio" name="qSU1" value="Não"><span class="opt-text">Não</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">13. O que faria você NUNCA usar uma plataforma como essa? <span class="q-hint">(resposta aberta)</span></label>
+        <textarea class="q-textarea" id="qSU2" placeholder="Compartilhe suas objeções ou preocupações..."></textarea>
+      </div>
+      <div class="q-block">
+        <label class="q-label">14. Você conhece alguma plataforma parecida que já usa ou usou? <span class="q-hint">(múltipla escolha)</span></label>
+        <div class="chip-grid" id="qSU3">
+          <div class="chip" onclick="toggleChip(this)">GetNinjas</div>
+          <div class="chip" onclick="toggleChip(this)">Workana</div>
+          <div class="chip" onclick="toggleChip(this)">Freelancer.com</div>
+          <div class="chip" onclick="toggleChip(this)">LinkedIn (busca direta)</div>
+          <div class="chip" onclick="toggleChip(this)">Não conheço nenhuma</div>
+        </div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">15. Conte sua situação <span class="q-hint">(opcional)</span></label>
+        <textarea class="q-textarea" id="qS_com" placeholder="Ex: Me formei há 2 anos mas nunca consegui o primeiro cliente..."></textarea>
+      </div>
+    </div>
+    <div class="card-nav">
+      <span class="step-counter">Passo 4 de 4</span>
+      <div style="display:flex;gap:10px">
+        <button class="btn" onclick="goBack()">← Voltar</button>
+        <button class="btn btn-primary" onclick="enviarResposta()">Enviar resposta ✓</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen" id="s-thanks">
+    <div class="thanks">
+      <div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+      <h2>Muito obrigado!</h2>
+      <p>Suas respostas foram registradas e são muito valiosas para construirmos uma plataforma de SST que realmente resolve os problemas da área.</p>
+      <div class="share-box">
+        <div class="share-label">Compartilhe com colegas</div>
+        <div class="share-text" id="shareMsg"></div>
+        <button class="btn-copy" onclick="copiarMsg()">Copiar mensagem</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>Pesquisa confidencial · SST Marketplace · Brasil</footer>
+
+</div>
 <script>
-// ── CONFIGURAÇÃO ─────────────────────────────────────────────
-// Cole aqui a URL do seu Apps Script proxy (o mesmo da enquete)
-var PROXY_URL = 'https://script.google.com/macros/s/AKfycbwKQdeTXRMsXNetRxDy_uGp3BmraeY8QHN85j2oioE3G1DxORIRz360ffXRt9PXTGWE/exec';
 
-// ── COUNTER ANIMADO ───────────────────────────────────────────
-var contador = 0;
-function animarContador(alvo) {
-  var el = document.getElementById('counterNum');
-  var step = Math.ceil(alvo / 40);
-  var timer = setInterval(function() {
-    contador = Math.min(contador + step, alvo);
-    el.textContent = contador;
-    if (contador >= alvo) clearInterval(timer);
-  }, 40);
-}
-// Busca total real do proxy ao carregar
-fetch(PROXY_URL + '?action=count')
-  .then(function(r){ return r.json(); })
-  .then(function(d){ if (d.total) animarContador(d.total); })
-  .catch(function(){ animarContador(0); });
+const PROXY_URL = 'https://script.google.com/macros/s/AKfycbwKQdeTXRMsXNetRxDy_uGp3BmraeY8QHN85j2oioE3G1DxORIRz360ffXRt9PXTGWE/exec';
 
-// ── TABS COMO FUNCIONA ───────────────────────────────────────
-function switchHow(tab, btn) {
-  document.querySelectorAll('.how-pane').forEach(function(p){ p.classList.remove('active'); });
-  document.querySelectorAll('.how-tab').forEach(function(b){ b.classList.remove('active'); });
-  document.getElementById('how-' + tab).classList.add('active');
-  btn.classList.add('active');
-}
+var profile = null;
+var emailSalvo = '';
+var hist = [];
+var curScreen = 's0';
 
-// ── SCROLL REVEAL ─────────────────────────────────────────────
-var observer = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
-
-// ── NAV SCROLL ────────────────────────────────────────────────
-window.addEventListener('scroll', function() {
-  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
-});
-
-// ── MENSAGENS DE COMPARTILHAMENTO ─────────────────────────────
-var SHARE_MSGS = {
-  'Profissional SST': '🦺 Ei! Tem uma nova plataforma de SST chegando que conecta profissionais a empresas que precisam de PGR, PCMSO, laudos e mais. Entre na lista de espera: ',
-  'Empresa / RH': '🏭 Ei! Uma plataforma de SST está chegando para facilitar a contratação de profissionais qualificados com orçamentos, prazos e avaliações. Dê uma olhada: ',
-  'Estudante / Recém-formado': '🎓 Ei! Uma plataforma vai abrir o mercado de SST para novos profissionais — com projetos reais, mentoria e portfólio. Entre na lista: '
+var FLOWS = {
+  prof: ['s-p1','s-p2','s-p3'],
+  emp:  ['s-e1','s-e2','s-e3'],
+  est:  ['s-s1','s-s2','s-s3']
 };
 
-// ── ENVIO LISTA DE ESPERA ─────────────────────────────────────
-function validarEnvio(nomeId, emailId, perfilId, erroId) {
-  var nome   = document.getElementById(nomeId).value.trim();
-  var email  = document.getElementById(emailId).value.trim();
-  var perfil = document.getElementById(perfilId).value;
-  var erroEl = document.getElementById(erroId);
-  var emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+var PROGRESS = {
+  's0':       {pct:0,   label:'Identificação do perfil'},
+  's-p1':     {pct:25,  label:'Profissional · Perfil'},
+  's-p2':     {pct:50,  label:'Profissional · Dores'},
+  's-p3':     {pct:75,  label:'Profissional · Negócio e mercado'},
+  's-e1':     {pct:25,  label:'Empresa · Perfil'},
+  's-e2':     {pct:50,  label:'Empresa · Dores'},
+  's-e3':     {pct:75,  label:'Empresa · Comportamento de compra'},
+  's-s1':     {pct:25,  label:'Estudante · Formação'},
+  's-s2':     {pct:50,  label:'Estudante · Barreiras'},
+  's-s3':     {pct:75,  label:'Estudante · Entrada no mercado'},
+  's-thanks': {pct:100, label:'Concluído!'}
+};
 
-  if (!nome || !email || !perfil || !emailRx.test(email)) {
-    erroEl.style.display = 'block';
-    return null;
-  }
-  erroEl.style.display = 'none';
-  return { nome: nome, email: email, perfil: perfil };
+var MSGS = {
+  prof: '🦺 Você é profissional de SST? Responda esta pesquisa rápida (5 min) e ajude a construir uma plataforma que conecta profissionais a empresas. Sua opinião vale muito!',
+  emp:  '🏭 Você é gestor ou RH? Responda esta pesquisa e ajude a criar uma plataforma que facilita a contratação de serviços de SST com mais transparência.',
+  est:  '🎓 Está se formando em SST ou fora do mercado? Sua história pode ajudar a criar uma plataforma que abre portas para novos profissionais da área. Responda em 5 min!'
+};
+
+function selectProfile(p) {
+  profile = p;
+  document.querySelectorAll('.p-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.getElementById('pp-' + p).classList.add('sel');
+  document.getElementById('btnNext0').disabled = false;
 }
 
-function enviarListaEspera(dados, boxId, successId) {
-  var btn = document.querySelector('#' + boxId + ' .btn-submit');
-  if (btn) btn.disabled = true;
+function showScreen(id) {
+  var cur = document.querySelector('.screen.active');
+  if (cur) cur.classList.remove('active');
+  var next = document.getElementById(id);
+  if (next) next.classList.add('active');
+  curScreen = id;
+  var pg = PROGRESS[id] || {pct:0, label:''};
+  document.getElementById('progressBar').style.width = pg.pct + '%';
+  document.getElementById('prog-pct').textContent = pg.pct + '%';
+  document.getElementById('prog-label').textContent = pg.label;
+  window.scrollTo(0,0);
+}
 
+function goNext() {
+  if (curScreen === 's0') {
+    if (!profile) return;
+    var emailEl = document.getElementById('qEmail');
+    var emailVal = emailEl ? emailEl.value.trim() : '';
+    var emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var erroEl = document.getElementById('emailErro');
+    if (!emailVal || !emailRx.test(emailVal)) {
+      if (erroEl) erroEl.style.display = 'block';
+      if (emailEl) { emailEl.style.borderColor = '#c0392b'; emailEl.focus(); }
+      return;
+    }
+    if (erroEl) erroEl.style.display = 'none';
+    if (emailEl) emailEl.style.borderColor = '';
+    emailSalvo = emailVal;
+    hist = ['s0'];
+    showScreen(FLOWS[profile][0]);
+  } else {
+    var flow = FLOWS[profile];
+    var idx = flow.indexOf(curScreen);
+    if (idx < flow.length - 1) {
+      hist.push(curScreen);
+      showScreen(flow[idx + 1]);
+    }
+  }
+}
+
+function goBack() {
+  if (hist.length) showScreen(hist.pop());
+}
+
+function toggleChip(el) { el.classList.toggle('sel'); }
+
+document.addEventListener('change', function(e) {
+  var t = e.target;
+  if (t.type === 'radio') {
+    document.querySelectorAll('input[name="' + t.name + '"]').forEach(function(r){
+      r.closest('.opt').classList.toggle('sel', r.checked);
+    });
+  }
+  if (t.type === 'checkbox') {
+    t.closest('.opt').classList.toggle('sel', t.checked);
+  }
+});
+
+function getEmail() { return emailSalvo; }
+function getRadio(name) { var el = document.querySelector('input[name="' + name + '"]:checked'); return el ? el.value : ''; }
+function getChecks(name) { return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(function(e){ return e.value; }).join(', '); }
+function getChips(id) { return Array.from(document.querySelectorAll('#' + id + ' .chip.sel')).map(function(e){ return e.textContent.trim(); }).join(', '); }
+function getText(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+function coletarRespostas() {
+  if (profile === 'prof') {
+    return {
+      email: getEmail(),
+      tempoAtuacao: getRadio('qP1'), regimeTrabalho: getChips('qP2'), servicos: getChips('qP3'),
+      canais: getChips('qP4'), dificuldades: getChecks('qP5'), usaria: getRadio('qP6'),
+      valorPagar: getRadio('qP7'),
+      rendaMensal: getRadio('qP8'), numClientes: getRadio('qP9'), perdeuContrato: getRadio('qP10'),
+      tempoFechamento: getRadio('qP11'), motivoDesistencia: getRadio('qP12'),
+      emiteNota: getRadio('qP13'), topaMentorar: getRadio('qP14'),
+      indicaria: getRadio('qPU1'), naoUsaria: getText('qPU2'), conhecePlat: getChips('qPU3'),
+      comentario: getText('qP_com')
+    };
+  }
+  if (profile === 'emp') {
+    return {
+      email: getEmail(),
+      porte: getRadio('qE1'), setor: getRadio('qE2'),
+      comoContrata: getChips('qE3b'), documentos: getChips('qE3'),
+      dificuldades: getChecks('qE4'), usaria: getRadio('qE5'), importancia: getChips('qE6'),
+      frequenciaContrat: getRadio('qE7'), valorMedioPago: getRadio('qE8'),
+      critDecisao: getChips('qE9'), jaTeveProblema: getRadio('qE10'),
+      pagariaMaisVerif: getRadio('qE11'),
+      indicaria: getRadio('qEU1'), naoUsaria: getText('qEU2'), conhecePlat: getChips('qEU3'),
+      comentario: getText('qE_com')
+    };
+  }
+  if (profile === 'est') {
+    return {
+      email: getEmail(),
+      formacao: getRadio('qS1'), tempoFormado: getRadio('qS2'), situacao: getRadio('qS3'),
+      barreiras: getChecks('qS4'), usaria: getRadio('qS5'), oferece: getChips('qS6'),
+      maiorAtrativo: getRadio('qS7'),
+      difAposFormar: getChecks('qS8'), aceitariaDesconto: getRadio('qS9'),
+      confiancaPrimeiro: getChips('qS10'), projetoPiloto: getRadio('qS11'),
+      temRegistro: getRadio('qS12'),
+      indicaria: getRadio('qSU1'), naoUsaria: getText('qSU2'), conhecePlat: getChips('qSU3'),
+      comentario: getText('qS_com')
+    };
+  }
+  return {};
+}
+
+function enviarResposta() {
+  var respostas = coletarRespostas();
   fetch(PROXY_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ profile: 'lista_espera', respostas: dados })
+    method: 'POST', mode: 'no-cors',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({profile: profile, respostas: respostas})
   }).catch(function(e){ console.log('envio:', e); });
-
-  document.getElementById(boxId).style.display = 'none';
-  document.getElementById(successId).style.display = 'block';
-
-  // Incrementa counter visual
-  var alvo = contador + 1;
-  animarContador(alvo);
-
-  // Mensagem de compartilhamento
-  var shareEl = document.getElementById('shareText2');
-  if (shareEl) {
-    shareEl.textContent = (SHARE_MSGS[dados.perfil] || SHARE_MSGS['Profissional SST']) + window.location.href;
-  }
+  document.getElementById('shareMsg').textContent = MSGS[profile] || '';
+  showScreen('s-thanks');
 }
 
-function entrarLista() {
-  var d = validarEnvio('wName','wEmail','wPerfil','formError');
-  if (d) enviarListaEspera(d, 'formBox', 'formSuccess');
-}
-
-function entrarLista2() {
-  var d = validarEnvio('wName2','wEmail2','wPerfil2','formError2');
-  if (d) enviarListaEspera(d, 'formBox2', 'formSuccess2');
-}
-
-function copiarLanding() {
-  var msg = document.getElementById('shareText2').textContent;
-  navigator.clipboard.writeText(msg).then(function() {
-    var btn = document.querySelector('.btn-copy2');
+function copiarMsg() {
+  var msg = document.getElementById('shareMsg').textContent;
+  navigator.clipboard.writeText(msg).then(function(){
+    var btn = document.querySelector('.btn-copy');
     btn.textContent = '✓ Copiado!';
     setTimeout(function(){ btn.textContent = 'Copiar mensagem'; }, 2500);
   });
 }
+
 </script>
 </body>
 </html>
